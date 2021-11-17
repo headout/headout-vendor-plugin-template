@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tickets.atthetop.ae/AgentWebApi" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://tickets.atthetop.ae/AgentWebApi" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://tickets.atthetop.ae/AgentWebApi">
+            <s:element name="Authentication">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="AuthenticationResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="AuthenticationResult" type="tns:AuthenticationResponce"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="AuthenticationResponce">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="AuthenticationStatus" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="AgentId" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="GetAgentTickets">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetAgentTicketsResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetAgentTicketsResult" type="tns:AgentServiceResourceEventsResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="AgentServiceResourceEventsResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="ResourceEventCollection" type="tns:ArrayOfAgentServiceResourceEvents"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ServiceResponse" type="tns:AgentSeviceResponse"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfAgentServiceResourceEvents">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="AgentServiceResourceEvents" nillable="true" type="tns:AgentServiceResourceEvents"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="AgentServiceResourceEvents">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="AttractionName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="TicketName" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="EventtypeId" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="ResourceID" type="s:int"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="AgentSeviceResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="GetTimeSlot">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="eventTypeId" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="resourceId" type="s:int"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="timeSlotDate" type="s:dateTime"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetTimeSlotResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetTimeSlotResult" type="tns:AgentServiceEventsResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="AgentServiceEventsResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="dataAgentServiceEventsCollection" type="tns:ArrayOfAgentServiceEvents"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ServiceResponse" type="tns:AgentSeviceResponse"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfAgentServiceEvents">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="AgentServiceEvents" nillable="true" type="tns:AgentServiceEvents"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="AgentServiceEvents">
+                <s:sequence>
+                    <s:element minOccurs="1" maxOccurs="1" name="EventID" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="EventName" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="StartDateTime" type="s:dateTime"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="EndDateTime" nillable="true" type="s:dateTime"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="EventTypeID" nillable="true" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="ResourceID" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Available" nillable="true" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Status" nillable="true" type="s:int"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="GetTicketTypes">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="selectedTimeSlot" type="tns:AgentServiceEvents"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetTicketTypesResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetTicketTypesResult" type="tns:AgentServiceTicketTypesResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="AgentServiceTicketTypesResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="TicketTypesCollection" type="tns:ArrayOfAgentServiceTicketTypes"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ServiceResponse" type="tns:AgentSeviceResponse"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfAgentServiceTicketTypes">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="AgentServiceTicketTypes" nillable="true" type="tns:AgentServiceTicketTypes"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="AgentServiceTicketTypes">
+                <s:sequence>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_TicketTypeId" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="v_Group" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="EventTypeID" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="c_TicketTypeCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="v_TicketTypeDesc" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="v_Code" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="v_Description" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_TicketPrice" type="s:decimal"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_BookingFee" type="s:decimal"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="Qty" nillable="true" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="c_Delete" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="StartDate" nillable="true" type="s:dateTime"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="EndDate" nillable="true" type="s:dateTime"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_TicketId" nillable="true" type="s:int"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="SaveTicket">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="selectedTimeSlot" type="tns:AgentServiceEvents"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="bookingCollection" type="tns:ArrayOfAgentServiceTicketTypes"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="SaveTicketResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="SaveTicketResult" type="tns:AgentServiceSaveBookingResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="AgentServiceSaveBookingResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="BookingId" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ServiceResponse" type="tns:AgentSeviceResponse"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="ConfirmTicket">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="VoucherNum" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="guestName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="BookingId" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ConfirmTicketResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="ConfirmTicketResult" type="tns:ConfirmBookingResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="ConfirmBookingResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="AgentServiceBookingResult" type="tns:AgentServiceBookingResult"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ServiceResponse" type="tns:AgentSeviceResponse"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="AgentServiceBookingResult">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="BookingAmount" type="s:double"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="BookingDateTime" type="s:dateTime"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="OrderNo" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="AgentName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="GuestName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="VoucherNo" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="VisitDateTime" type="s:dateTime"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="GetOrderDetails">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="Orderid" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetOrderDetailsResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetOrderDetailsResult" type="tns:BookingDetailsResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="BookingDetailsResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="dataBookingDetailsCollection" type="tns:ArrayOfAgentServiceBookingInfoDetails"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ServiceResponse" type="tns:AgentSeviceResponse"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="ArrayOfAgentServiceBookingInfoDetails">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="AgentServiceBookingInfoDetails" nillable="true" type="tns:AgentServiceBookingInfoDetails"/>
+                </s:sequence>
+            </s:complexType>
+            <s:complexType name="AgentServiceBookingInfoDetails">
+                <s:sequence>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_TicketTypeId" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_PropertyId" type="s:int"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="v_Group" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="c_TicketTypeCode" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="v_TicketTypeDesc" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="v_Code" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="v_Description" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_TicketPrice" nillable="true" type="s:decimal"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_BookingFee" nillable="true" type="s:decimal"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="c_Delete" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_TicketId" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_ticketQuantity" type="s:int"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="i_totalAmount" type="s:decimal"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="dt_ticketDate" type="s:dateTime"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="guestName" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="vGalaxyOrderId" type="s:string"/>
+                    <s:element minOccurs="1" maxOccurs="1" name="OrderId" type="s:int"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="CancelBooking">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="Orderid" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="CancelBookingResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="CancelBookingResult" type="tns:CancelResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:complexType name="CancelResponse">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="CancelResult" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="OrderID" type="s:string"/>
+                    <s:element minOccurs="0" maxOccurs="1" name="ServiceResponse" type="tns:AgentSeviceResponse"/>
+                </s:sequence>
+            </s:complexType>
+            <s:element name="ModifyBooking">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="orderId" type="s:int"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="guestName" type="s:string"/>
+                        <s:element minOccurs="0" maxOccurs="1" name="dataCollection" type="tns:ArrayOfAgentServiceBookingInfoDetails"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ModifyBookingResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="ModifyBookingResult" type="tns:BookingDetailsResponse"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="testcredit">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="agentno" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="testcreditResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="testcreditResult" type="s:int"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="AuthenticationSoapIn">
+        <wsdl:part name="parameters" element="tns:Authentication"/>
+    </wsdl:message>
+    <wsdl:message name="AuthenticationSoapOut">
+        <wsdl:part name="parameters" element="tns:AuthenticationResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAgentTicketsSoapIn">
+        <wsdl:part name="parameters" element="tns:GetAgentTickets"/>
+    </wsdl:message>
+    <wsdl:message name="GetAgentTicketsSoapOut">
+        <wsdl:part name="parameters" element="tns:GetAgentTicketsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetTimeSlotSoapIn">
+        <wsdl:part name="parameters" element="tns:GetTimeSlot"/>
+    </wsdl:message>
+    <wsdl:message name="GetTimeSlotSoapOut">
+        <wsdl:part name="parameters" element="tns:GetTimeSlotResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetTicketTypesSoapIn">
+        <wsdl:part name="parameters" element="tns:GetTicketTypes"/>
+    </wsdl:message>
+    <wsdl:message name="GetTicketTypesSoapOut">
+        <wsdl:part name="parameters" element="tns:GetTicketTypesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SaveTicketSoapIn">
+        <wsdl:part name="parameters" element="tns:SaveTicket"/>
+    </wsdl:message>
+    <wsdl:message name="SaveTicketSoapOut">
+        <wsdl:part name="parameters" element="tns:SaveTicketResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ConfirmTicketSoapIn">
+        <wsdl:part name="parameters" element="tns:ConfirmTicket"/>
+    </wsdl:message>
+    <wsdl:message name="ConfirmTicketSoapOut">
+        <wsdl:part name="parameters" element="tns:ConfirmTicketResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderDetailsSoapIn">
+        <wsdl:part name="parameters" element="tns:GetOrderDetails"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderDetailsSoapOut">
+        <wsdl:part name="parameters" element="tns:GetOrderDetailsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CancelBookingSoapIn">
+        <wsdl:part name="parameters" element="tns:CancelBooking"/>
+    </wsdl:message>
+    <wsdl:message name="CancelBookingSoapOut">
+        <wsdl:part name="parameters" element="tns:CancelBookingResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ModifyBookingSoapIn">
+        <wsdl:part name="parameters" element="tns:ModifyBooking"/>
+    </wsdl:message>
+    <wsdl:message name="ModifyBookingSoapOut">
+        <wsdl:part name="parameters" element="tns:ModifyBookingResponse"/>
+    </wsdl:message>
+    <wsdl:message name="testcreditSoapIn">
+        <wsdl:part name="parameters" element="tns:testcredit"/>
+    </wsdl:message>
+    <wsdl:message name="testcreditSoapOut">
+        <wsdl:part name="parameters" element="tns:testcreditResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="AgentBookingSoap">
+        <wsdl:operation name="Authentication">
+            <wsdl:input message="tns:AuthenticationSoapIn"/>
+            <wsdl:output message="tns:AuthenticationSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAgentTickets">
+            <wsdl:input message="tns:GetAgentTicketsSoapIn"/>
+            <wsdl:output message="tns:GetAgentTicketsSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTimeSlot">
+            <wsdl:input message="tns:GetTimeSlotSoapIn"/>
+            <wsdl:output message="tns:GetTimeSlotSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetTicketTypes">
+            <wsdl:input message="tns:GetTicketTypesSoapIn"/>
+            <wsdl:output message="tns:GetTicketTypesSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="SaveTicket">
+            <wsdl:input message="tns:SaveTicketSoapIn"/>
+            <wsdl:output message="tns:SaveTicketSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConfirmTicket">
+            <wsdl:input message="tns:ConfirmTicketSoapIn"/>
+            <wsdl:output message="tns:ConfirmTicketSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderDetails">
+            <wsdl:input message="tns:GetOrderDetailsSoapIn"/>
+            <wsdl:output message="tns:GetOrderDetailsSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelBooking">
+            <wsdl:input message="tns:CancelBookingSoapIn"/>
+            <wsdl:output message="tns:CancelBookingSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="ModifyBooking">
+            <wsdl:input message="tns:ModifyBookingSoapIn"/>
+            <wsdl:output message="tns:ModifyBookingSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="testcredit">
+            <wsdl:input message="tns:testcreditSoapIn"/>
+            <wsdl:output message="tns:testcreditSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AgentBookingSoap" type="tns:AgentBookingSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Authentication">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/Authentication" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetAgentTickets">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/GetAgentTickets" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTimeSlot">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/GetTimeSlot" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTicketTypes">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/GetTicketTypes" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SaveTicket">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/SaveTicket" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConfirmTicket">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/ConfirmTicket" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderDetails">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/GetOrderDetails" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelBooking">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/CancelBooking" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ModifyBooking">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/ModifyBooking" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="testcredit">
+            <soap:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/testcredit" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="AgentBookingSoap12" type="tns:AgentBookingSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Authentication">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/Authentication" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetAgentTickets">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/GetAgentTickets" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTimeSlot">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/GetTimeSlot" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetTicketTypes">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/GetTicketTypes" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SaveTicket">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/SaveTicket" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConfirmTicket">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/ConfirmTicket" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderDetails">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/GetOrderDetails" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelBooking">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/CancelBooking" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ModifyBooking">
+            <soap12:operation soapAction="http://tickets.atthetop.ae/AgentWebApi/ModifyBooking" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="testcredit">
+            <soap12:operation soapAction="http://ticketse.atthetop.ae/AgentWebApi/testcredit" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AgentBooking">
+        <wsdl:port name="AgentBookingSoap" binding="tns:AgentBookingSoap">
+            <soap:address location="https://tickets.atthetop.ae/agentservices/AgentBooking.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="AgentBookingSoap12" binding="tns:AgentBookingSoap12">
+            <soap12:address location="https://tickets.atthetop.ae/agentservices/AgentBooking.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
