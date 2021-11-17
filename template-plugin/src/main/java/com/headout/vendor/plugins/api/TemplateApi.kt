@@ -3,7 +3,7 @@ package com.headout.vendor.plugins.ho.api
 import com.headout.vendor.plugins.ho.api.models.*
 import retrofit2.http.*
 
-interface hoApi {
+interface TemplateApi {
 
     @POST("login")
     suspend fun login(@Body body: LoginRequest): LoginResponse

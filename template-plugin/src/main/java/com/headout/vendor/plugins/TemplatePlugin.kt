@@ -10,15 +10,15 @@ import com.headout.vendor.api.models.CancellationResponse
 import com.headout.vendor.api.models.InventoryRangeQuery
 import com.headout.vendor.plugins.TemplatePluginHelper
 import com.headout.vendor.plugins.TemplateProductCode
-import com.headout.vendor.plugins.ho.api.hoApi
+import com.headout.vendor.plugins.ho.api.TemplateApi
 import com.headout.vendor.plugins.utils.ITemplateCredentials
 import com.headout.vendor.plugins.utils.wrapError
 import java.util.logging.Logger
 
 
 class TemplatePlugin private constructor(
-        private val hoApi: hoApi,
-        private val headoutInventoryService: IHeadoutInventoryApi
+    private val hoApi: TemplateApi,
+    private val headoutInventoryService: IHeadoutInventoryApi
 ) : IVendorBookingPlugin<TemplateProductCode>, IVendorInventoryPlugin<TemplateProductCode> {
 
     private val logger = Logger.getLogger(TemplatePlugin::class.java.name)

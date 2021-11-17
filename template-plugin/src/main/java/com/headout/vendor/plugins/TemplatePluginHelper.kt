@@ -1,7 +1,7 @@
 package com.headout.vendor.plugins
 
 import com.headout.vendor.plugins.utils.AbstractPluginHelper
-import com.headout.vendor.plugins.ho.api.hoApi
+import com.headout.vendor.plugins.ho.api.TemplateApi
 import com.headout.vendor.plugins.ho.api.models.LoginRequest
 import com.headout.vendor.plugins.utils.AuthorizationInterceptor
 import com.headout.vendor.plugins.utils.ITemplateCredentials
@@ -16,10 +16,10 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 class TemplatePluginHelper(val credentials: ITemplateCredentials) : AbstractPluginHelper() {
 
     private val authInterceptor: AuthorizationInterceptor = AuthorizationInterceptor(credentials, ::getNewLoginToken)
-    private val hoLoginAPI: hoApi
+    private val templateLoginApi: TemplateApi
 
     private fun getNewLoginToken() = runBlocking {
-        val res = hoLoginAPI.login(LoginRequest(
+        val res = templateLoginApi.login(LoginRequest(
                 username = credentials.username,
                 password = credentials.password
         ))
@@ -31,10 +31,10 @@ class TemplatePluginHelper(val credentials: ITemplateCredentials) : AbstractPlug
                 .addInterceptor(authInterceptor)
                 .build()
         val retrofit = getRetrofit(credentials.endpoint, client)
-        hoLoginAPI = retrofit.create(hoApi::class.java)
+        templateLoginApi = retrofit.create(TemplateApi::class.java)
     }
 
-    internal fun getTemplateApi(): hoApi {
+    internal fun getTemplateApi(): TemplateApi {
         val client = getOkHttpClientBuilder(credentials.debug)
                 .addInterceptor(authInterceptor)
                 .authenticator(LoginTokenAuthenticator {
@@ -44,7 +44,7 @@ class TemplatePluginHelper(val credentials: ITemplateCredentials) : AbstractPlug
                 })
                 .build()
         val retrofit = getRetrofit(credentials.endpoint, client)
-        return retrofit.create(hoApi::class.java)
+        return retrofit.create(TemplateApi::class.java)
     }
 
     override fun getRetrofit(baseUrl: String, client: OkHttpClient?): Retrofit {

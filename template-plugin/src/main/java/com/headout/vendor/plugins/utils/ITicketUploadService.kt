@@ -1,4 +1,4 @@
-package com.headout.vendor.plugins.services
+package com.headout.vendor.plugins.utils
 
 import java.io.InputStream
 
