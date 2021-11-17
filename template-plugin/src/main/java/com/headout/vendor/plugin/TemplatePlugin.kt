@@ -10,7 +10,7 @@ import com.headout.vendor.api.models.CancellationResponse
 import com.headout.vendor.api.models.InventoryRangeQuery
 import com.headout.vendor.plugin.TemplatePluginHelper
 import com.headout.vendor.plugin.TemplateProductCode
-import com.headout.vendor.plugin.ho.api.TemplateApi
+import com.headout.vendor.plugin.api.TemplateApi
 import com.headout.vendor.plugin.utils.ITemplateCredentials
 import com.headout.vendor.plugin.utils.wrapError
 import java.util.logging.Logger

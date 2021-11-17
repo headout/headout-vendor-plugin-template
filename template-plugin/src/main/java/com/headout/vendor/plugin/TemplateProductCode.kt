@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyDescription
 import com.headout.vendor.api.models.IInventoryThreshold
+import com.headout.vendor.plugin.utils.PriceSyncConfiguration
+import com.headout.vendor.plugin.utils.PriceSyncField
+import com.headout.vendor.plugin.utils.PriceSyncProductCode
 import tourlandish.common.enums.inventory.PaxType
 
 enum class GenericFieldType {
@@ -42,5 +45,8 @@ data class TemplateProductCode(
                 "<b>Value: String </b> -> Constant Field Data <br>\n")
         @get:JsonProperty(required = false)
         val constantFields: Map<Long, String> = emptyMap(),
-    override val threshold: Int = 0
-): IInventoryThreshold
+        override val priceSyncConfiguration: PriceSyncConfiguration = PriceSyncConfiguration(
+            priceSyncFields = listOf(PriceSyncField.RETAIL_PRICE)
+        ),
+        override val threshold: Int = 0
+): IInventoryThreshold, PriceSyncProductCode
