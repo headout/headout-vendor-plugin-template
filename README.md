@@ -1,6 +1,6 @@
 # headout-vendor-plugin-template
 
-## For updated architecture doc check this [doc](https://headout.atlassian.net/wiki/external/984154121/ZGMzMTIwMzhhZDU4NDVkOGJkZGNjNDZiMDU3NDMxYzI?atlOrigin=eyJpIjoiY2Q0MGU0Mzk5ZmFiNGQ5OWJjMmU1YjQ2YjkxMzYxYTEiLCJwIjoiYyJ9): 
+## Architecture [doc](https://headout.atlassian.net/wiki/external/984154121/ZGMzMTIwMzhhZDU4NDVkOGJkZGNjNDZiMDU3NDMxYzI?atlOrigin=eyJpIjoiY2Q0MGU0Mzk5ZmFiNGQ5OWJjMmU1YjQ2YjkxMzYxYTEiLCJwIjoiYyJ9): 
 
 Tech Stack:
 Kotlin
