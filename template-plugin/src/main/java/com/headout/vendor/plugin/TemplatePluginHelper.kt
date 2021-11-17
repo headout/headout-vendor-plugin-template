@@ -1,8 +1,7 @@
 package com.headout.vendor.plugin
 
+import com.headout.vendor.plugin.api.TemplateApi
 import com.headout.vendor.plugin.utils.AbstractPluginHelper
-import com.headout.vendor.plugin.ho.api.TemplateApi
-import com.headout.vendor.plugin.ho.api.models.LoginRequest
 import com.headout.vendor.plugin.utils.AuthorizationInterceptor
 import com.headout.vendor.plugin.utils.ITemplateCredentials
 import com.headout.vendor.plugin.utils.LoginTokenAuthenticator
@@ -19,11 +18,7 @@ class TemplatePluginHelper(val credentials: ITemplateCredentials) : AbstractPlug
     private val templateLoginApi: TemplateApi
 
     private fun getNewLoginToken() = runBlocking {
-        val res = templateLoginApi.login(LoginRequest(
-                username = credentials.username,
-                password = credentials.password
-        ))
-        res.token!!
+        "Implement token logic if there is any"
     }
 
     init {

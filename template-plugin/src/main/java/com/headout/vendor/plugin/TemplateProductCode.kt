@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyDescription
 import com.headout.vendor.api.models.IInventoryThreshold
+import com.headout.vendor.plugin.utils.PriceSyncConfiguration
+import com.headout.vendor.plugin.utils.PriceSyncField
 import com.headout.vendor.plugin.utils.PriceSyncProductCode
 import tourlandish.common.enums.inventory.PaxType
 
