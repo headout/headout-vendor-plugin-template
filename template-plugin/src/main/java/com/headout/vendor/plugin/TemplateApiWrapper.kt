@@ -1,4 +1,4 @@
-package com.headout.vendor.plugins.template
+package com.headout.vendor.plugin
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -7,12 +7,14 @@ import com.headout.vendor.plugins.template.api.TemplateApi
 import com.headout.vendor.plugins.template.models.requests.CancelCompleteReservation
 import com.headout.vendor.plugins.template.models.requests.CreateCompleteReservation
 import com.headout.vendor.plugins.template.models.requests.GetAvailability
-import com.headout.vendor.plugins.template.models.requests.GetAvailabilityToSign
 import com.headout.vendor.plugins.template.models.requests.GetTicketTypes
 import com.headout.vendor.plugins.template.models.responses.*
 
 val objectMapper: ObjectMapper = ObjectMapper().registerModule(KotlinModule())
 
+/*
+* Miscellaneous helper methods.
+* */
 class TemplateApiWrapper(_credentials: TemplateCredentials) {
     private val api: TemplateApi = TemplatePluginHelper(_credentials).templateApi
 

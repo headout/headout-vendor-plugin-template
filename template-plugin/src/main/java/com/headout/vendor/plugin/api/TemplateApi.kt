@@ -10,6 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 // See API Docs provided by the Global Reseller at https://globalreseller.nl/documentation/api/getAvailableUsers
+// Generic Retrofit interface: https://square.github.io/retrofit/
 interface TemplateApi {
     @POST("getAvailableUsers")
     suspend fun getAvailableUsers(): GetAvailableUsersResponse

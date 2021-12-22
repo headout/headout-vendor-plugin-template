@@ -1,10 +1,13 @@
-package com.headout.vendor.plugins.template
+package com.headout.vendor.plugin
 
 import com.headout.vendor.plugin.utils.AbstractPluginHelper
 import com.headout.vendor.plugins.template.api.TemplateApi
 import okhttp3.OkHttpClient
 
-
+/*
+* Helper to intercept the requests and inject whatever data the API needs.
+* This includes setting various headers, signing the API request, etc.
+* */
 class TemplatePluginHelper(
     private val credentials: TemplateCredentials
 

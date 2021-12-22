@@ -1,4 +1,4 @@
-package com.headout.vendor.plugins.template
+package com.headout.vendor.plugin
 
 import com.headout.vendor.api.IHeadoutInventoryApi
 import com.headout.vendor.api.IVendorBooking
@@ -34,10 +34,14 @@ import org.joda.time.LocalTime
 import kotlin.random.Random
 
 class TemplatePlugin private constructor(
-    private val gtHelper: TemplatePluginHelper,
+    private val templatePluginHelper: TemplatePluginHelper,
     private val headoutInventoryService: IHeadoutInventoryApi,
     private val redisManager: RedisManager
 ) : IVendorInventoryPlugin<TemplateCode>, IVendorBookingPlugin<TemplateCode> {
+    /*
+    * Sample method to modify request data and format it into suitable dataclasses
+    * for easier use and more readability
+    * */
     private fun convertTicketTypesToPaxPrice(
         ticketTypes: List<TicketTypes>,
         productCode: TemplateCode
@@ -55,7 +59,13 @@ class TemplatePlugin private constructor(
             )
         }
     }
-
+    /*
+    * Example of caching with redis in case there are responses that are too huge or are heavily rate-limited
+    * and of course if they can be reused. Self explanatory to a huge extent
+    * Process:
+    * 1. Form a unique key string
+    * 2. Use appropriate methods to set, get, getOrSet, either in a blocking or non blocking way
+    * */
     private suspend fun getCachedPriceList(userId: Int, date: String): GetTicketTypesResponse {
         val key = "template-$userId-$date"
         val secondsInTwelveHours = Hours.SIX.toStandardSeconds().seconds * 2
@@ -64,10 +74,23 @@ class TemplatePlugin private constructor(
             classObject = GetTicketTypesResponse::class.java,
             expiryInSeconds = secondsInTwelveHours + Random.nextInt(secondsInTwelveHours)
         ) {
-            mapOf(key to gtHelper.templateApi.getTicketTypes(GetTicketTypes(userId, "en", date)))
+            mapOf(key to templatePluginHelper.templateApi.getTicketTypes(GetTicketTypes(userId, "en", date)))
         }
     }
-
+    /*
+    * Method which vendor plugin system calls to update the Headout side inventory.
+    * Several inventory related APIs are called within this method and their responses are then
+    * processed to populate the inventory slots.
+    *
+    * post-processing:
+    * These inventory slots are then processed by the inventory updation service which populates the database
+    * with the availability information
+    *
+    * @param inventoryRangeQueries List of inventory range queries, which have plugin related information like:
+    * 1. The product code,
+    * 2. Start and end date for the query,
+    * 3. vendorId, etc
+    * */
     override fun updateInventoryForRangeQueries(inventoryRangeQueries: List<InventoryRangeQuery<TemplateCode>>) {
         fetchAndUpdateSlotsPerQueryWrappingError(inventoryRangeQueries, headoutInventoryService) { query ->
             val userId = query.productCode.userId
@@ -79,7 +102,7 @@ class TemplatePlugin private constructor(
                 userId = userId
             )
 
-            val availabilityResponse = gtHelper.templateApi.getAvailability(availabilityRequest)
+            val availabilityResponse = templatePluginHelper.templateApi.getAvailability(availabilityRequest)
             val availabilityType = availabilityResponse.availabilityType
 
             val inventorySlotInfoList = if (availabilityType == "timeslots") {
@@ -157,6 +180,21 @@ class TemplatePlugin private constructor(
 
     override fun getProductCodeClass(): Class<TemplateCode> = TemplateCode::class.java
 
+    /*
+    * Method where all booking related API calls are made.
+    * Tentative flow is ->
+    * 1. Call the live availability API is it is provided (most availability apis are cached so they are
+    * technically not real time) to check for the availability
+    * 2. If passed, make the reservation API calls
+    * 3. Once we have made the reservation, the response returned from the API is then processed to
+    * obtain information like ticket data, cancellation reference (if provided),etc
+    * This data is populated in the BookingResponse which is then processed in the post booking flow to send
+    * proper emails and attached tickets
+    *
+    * @param booking object containing information such as booking id, datetime for the booking, number of guests
+    * and their details, etc
+    * @return the BookingResponse object
+    * */
     override suspend fun book(booking: IVendorBooking<TemplateCode>): Result<BookingResponse> = wrapError {
         val date = booking.inventoryDate
         val time = booking.inventoryTime
@@ -180,7 +218,7 @@ class TemplatePlugin private constructor(
                 userId = code.userId
             )
 
-        val reservation = gtHelper.templateApi.createCompleteReservation(createCompleteReservationRequest)
+        val reservation = templatePluginHelper.templateApi.createCompleteReservation(createCompleteReservationRequest)
 
         BookingResponse.builder()
             .setTickets(
@@ -196,6 +234,11 @@ class TemplatePlugin private constructor(
             .build()
     }
 
+    /*
+    * This method is used to cancel a reservation (if supported) created by the vendor plugin
+    * Here the APIs for cancellations are called.
+    * @param cancellationRequest Will contain the cancellation reference Id
+    * */
     override suspend fun cancel(cancellationRequest: CancellationRequest<TemplateCode>): Result<CancellationResponse> =
         wrapError {
             val reservationId = cancellationRequest.cancellationId?.toInt()
@@ -206,7 +249,7 @@ class TemplatePlugin private constructor(
                 userId = cancellationRequest.productCode.userId
             )
 
-            gtHelper.templateApi.cancelCompleteReservation(cancelCompleteReservation)
+            templatePluginHelper.templateApi.cancelCompleteReservation(cancelCompleteReservation)
 
             CancellationResponse(
                 cancellationId = cancellationRequest.cancellationId,
