@@ -14,7 +14,7 @@ import com.headout.vendor.plugins.template.models.responses.*
 val objectMapper: ObjectMapper = ObjectMapper().registerModule(KotlinModule())
 
 class TemplateApiWrapper(_credentials: TemplateCredentials) {
-    private val api: TemplateApi = TemplatePluginHelper(_credentials).getTemplateApi()
+    private val api: TemplateApi = TemplatePluginHelper(_credentials).templateApi
 
     suspend fun getAvailableUsers(): List<Users> {
         val body = api.getAvailableUsers()

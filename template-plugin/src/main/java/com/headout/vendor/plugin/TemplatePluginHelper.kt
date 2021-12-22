@@ -1,17 +1,8 @@
 package com.headout.vendor.plugins.template
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.PropertyAccessor
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.headout.vendor.plugin.utils.AbstractPluginHelper
 import com.headout.vendor.plugins.template.api.TemplateApi
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.RequestBody
-import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
 
 
 class TemplatePluginHelper(
