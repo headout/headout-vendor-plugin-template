@@ -33,7 +33,7 @@ class TemplateApiWrapper(_credentials: TemplateCredentials) {
     // returns something like
     // {2021-12-01={10:00=true, 10:15=true, 10:30=true, 10:45=true, 11:00=true, 11:15=true, 11:30=true, 11:45=true
     suspend fun getAvailability(params: GetAvailability): GetAvailabilityResponse {
-        val body = api.getAvailability(GetAvailabilityToSign(params))
+        val body = api.getAvailability(params)
         if (body.success) {
             return body
         } else throw VendorPluginException("getAvailableUsers failed")

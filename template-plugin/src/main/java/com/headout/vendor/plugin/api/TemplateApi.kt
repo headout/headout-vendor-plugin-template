@@ -18,7 +18,7 @@ interface TemplateApi {
     suspend fun getTicketTypes(@Body request: GetTicketTypes): GetTicketTypesResponse
 
     @POST("getAvailability")
-    suspend fun getAvailability(@Body request: GetAvailabilityToSign): GetAvailabilityResponse
+    suspend fun getAvailability(@Body request: GetAvailability): GetAvailabilityResponse
 
     @POST("createCompleteReservation")
     suspend fun createCompleteReservation(@Body request: CreateCompleteReservation): CreateCompleteReservationResponse
