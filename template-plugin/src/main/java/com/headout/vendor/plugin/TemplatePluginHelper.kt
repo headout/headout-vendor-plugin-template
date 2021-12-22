@@ -1,53 +1,37 @@
-package com.headout.vendor.plugin
+package com.headout.vendor.plugins.template
 
-import com.headout.vendor.plugin.api.TemplateApi
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.PropertyAccessor
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.headout.vendor.plugin.utils.AbstractPluginHelper
-import com.headout.vendor.plugin.utils.AuthorizationInterceptor
-import com.headout.vendor.plugin.utils.ITemplateCredentials
-import com.headout.vendor.plugin.utils.LoginTokenAuthenticator
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import kotlinx.coroutines.runBlocking
+import com.headout.vendor.plugins.template.api.TemplateApi
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
 
-class TemplatePluginHelper(val credentials: ITemplateCredentials) : AbstractPluginHelper() {
+class TemplatePluginHelper(
+    private val credentials: TemplateCredentials
 
-    private val authInterceptor: AuthorizationInterceptor = AuthorizationInterceptor(credentials, ::getNewLoginToken)
-    private val templateLoginApi: TemplateApi
+) : AbstractPluginHelper() {
+    private val templateClient = getRetrofit(credentials.baseUrl, getOkHttpClient())
+    val templateApi: TemplateApi = templateClient.create(TemplateApi::class.java)
 
-    private fun getNewLoginToken() = runBlocking {
-        "Implement token logic if there is any"
-    }
 
-    init {
-        val client = getOkHttpClientBuilder(credentials.debug)
-                .addInterceptor(authInterceptor)
-                .build()
-        val retrofit = getRetrofit(credentials.endpoint, client)
-        templateLoginApi = retrofit.create(TemplateApi::class.java)
-    }
-
-    internal fun getTemplateApi(): TemplateApi {
-        val client = getOkHttpClientBuilder(credentials.debug)
-                .addInterceptor(authInterceptor)
-                .authenticator(LoginTokenAuthenticator {
-                    val token = getNewLoginToken()
-                    authInterceptor.updateToken(token)
-                    token
-                })
-                .build()
-        val retrofit = getRetrofit(credentials.endpoint, client)
-        return retrofit.create(TemplateApi::class.java)
-    }
-
-    override fun getRetrofit(baseUrl: String, client: OkHttpClient?): Retrofit {
-        val retrofitBuilder = Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .addConverterFactory(JacksonConverterFactory.create(getObjectMapper()))
-
-        return client?.let { retrofitBuilder.client(client).build() } ?: retrofitBuilder.build()
+    private fun getOkHttpClient(): OkHttpClient {
+        return getOkHttpClientBuilder(credentials.debug)
+            .addInterceptor { chain ->
+                val original = chain.request()
+                val request = original.newBuilder()
+                    .addHeader("X-API-Key", credentials.apiKey)
+                    .addHeader("X-API-Secret", credentials.apiSecret)
+                    .build()
+                chain.proceed(request)
+            }
+            .build()
     }
 }
