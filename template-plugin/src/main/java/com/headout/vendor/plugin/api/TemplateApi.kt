@@ -1,44 +1,28 @@
-package com.headout.vendor.plugin.api
+package com.headout.vendor.plugins.template.api
 
-import com.headout.vendor.plugins.experticket.models.request.ReservationRequest
-import com.headout.vendor.plugins.experticket.models.request.TransactionRequest
-import com.headout.vendor.plugins.experticket.models.response.*
-import retrofit2.http.*
+import com.headout.vendor.plugins.template.models.requests.*
+import com.headout.vendor.plugins.template.models.responses.CancelCompleteReservationResponse
+import com.headout.vendor.plugins.template.models.responses.CreateCompleteReservationResponse
+import com.headout.vendor.plugins.template.models.responses.GetAvailabilityResponse
+import com.headout.vendor.plugins.template.models.responses.GetAvailableUsersResponse
+import com.headout.vendor.plugins.template.models.responses.GetTicketTypesResponse
+import retrofit2.http.Body
+import retrofit2.http.POST
 
-// Example API docs at https://apidocs.experticket.com/
+// See API Docs provided by the Global Reseller at https://globalreseller.nl/documentation/api/getAvailableUsers
 interface TemplateApi {
-    @GET("/api/cataloglastupdateddatetime")
-    suspend fun lastUpdates(): LastUpdated
+    @POST("getAvailableUsers")
+    suspend fun getAvailableUsers(): GetAvailableUsersResponse
 
-    @GET("/api/catalog")
-    suspend fun getCatalog(): Catalog
+    @POST("getTicketTypes")
+    suspend fun getTicketTypes(@Body request: GetTicketTypes): GetTicketTypesResponse
 
-    @GET("/api/sessions")
-    suspend fun getSessions(
-        @Query("SessionsGroupProfileIds") sessionGroupProfileId: List<String>,
-        @Query("Dates") dates: List<String>
-    ): SessionResponse
+    @POST("getAvailability")
+    suspend fun getAvailability(@Body request: GetAvailability): GetAvailabilityResponse
 
-    @GET("/api/availablecapacity")
-    suspend fun getAvailability(
-        @Query("ProductIds") productId: String,
-        @Query("Dates") dates: List<String>
-    ): AvailabilityResponse
+    @POST("createCompleteReservation")
+    suspend fun createCompleteReservation(@Body request: CreateCompleteReservation): CreateCompleteReservationResponse
 
-
-    @POST("/api/reservation")
-    suspend fun bookReservation(
-        @Body reservationBody: ReservationRequest
-    ): ReservationResponse
-
-    @POST("/api/transaction")
-    suspend fun makeTransaction(
-        @Body transactionBody: TransactionRequest
-    ): Transaction
-
-    @GET("/api/RealTimePrices")
-    suspend fun getRealTimePrices(
-        @Query("ProductIds") productId: String,
-        @Query("AccessDates") accessDates: List<String>
-    ): RealTimePrice
+    @POST("cancelCompleteReservation")
+    suspend fun cancelCompleteReservation(@Body request: CancelCompleteReservation): CancelCompleteReservationResponse
 }
